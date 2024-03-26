@@ -18,12 +18,12 @@ class RandomForest:
     def getOptimal():
 
         # Manually adjusted by CV results
-        model = RandomForestClassifier(n_estimators=N_EST, min_samples_split=2, min_samples_leaf=1,  max_depth=10, random_state=0)
+        model = RandomForestClassifier(n_estimators=N_EST, min_samples_split=2, min_samples_leaf=1,  max_depth=10)
         return model
 
 def customBagging(model, X, y):
     # Create the Bagging ensemble model
-    ensemble_model = BaggingClassifier(model, n_estimators=N_EST, random_state=0)
+    ensemble_model = BaggingClassifier(model, n_estimators=N_EST)
     # Train the ensemble model
     ensemble_model.fit(X, y)
     # Evaluate the ensemble model
@@ -44,5 +44,5 @@ test = utilizer.pca(test)
 model = RandomForest.getOptimal()
 
 for i in range(1, 6):
-    ensemble = customBagging(model, X, y)
+    ensemble = model.fit(X,y)
     utilizer.getPredictCSV(test, ensemble, "bag_rf_{}.csv".format(i))
